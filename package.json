@@ -1,0 +1,10 @@
+{
+  "name": "browserify-string-to-js",
+  "version": "1.0.0",
+  "description": "read css files, html files, etc. with require(...)",
+  "main": "index.js",
+  "dependencies": {
+    "string-to-js": "0.0.1",
+    "through": "^2.3.7"
+  }
+}
