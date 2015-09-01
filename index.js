@@ -27,13 +27,21 @@ var rtype = /^(html|css)$/;
  */
 
 function transform(files) {
-  var rsupported = !arguments.length
-    ? rtype
-    : isArray(files)
-    ? new RegExp('^(' + files.join('|') + ')$')
-    : files;
+  var rsupported = rtype
 
-  return function stoj(file) {
+  if (files) {
+    if (files.source) {
+      rsupported = files
+    } else if (typeof files === 'string') {
+      return stoj(files)
+    } else if (isArray(files)) {
+      rsupported = new RegExp('^(' + files.join('|') + ')$')
+    } else {
+      throw new Error('stoj: invalid options')
+    }
+  }
+
+  function stoj(file) {
     var type = extension(file);
     if (!rsupported.test(type)) return through();
 
@@ -58,6 +66,8 @@ function transform(files) {
       this.queue(null);
     }
   }
+
+  return stoj
 }
 
 /**
